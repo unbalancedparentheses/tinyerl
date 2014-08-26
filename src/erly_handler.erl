@@ -15,7 +15,7 @@ handle('POST', <<"/", Url/binary>>, _Req) ->
                 {RandomBinary, Url}),
 
     RandomUrl = <<"http://localhost:3000/", RandomBinary/binary>>,
-    {ok, [{<<"Location">>, RandomUrl}], RandomUrl};
+    {201, [{<<"Location">>, RandomUrl}], RandomUrl};
 
 handle('GET', <<"/", RandomUrl/binary>>, _Req) ->
     case dets:lookup(urls, RandomUrl) of
