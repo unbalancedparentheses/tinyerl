@@ -10,9 +10,12 @@ handle(Req, _Args) ->
 
 handle('POST', <<"/", Url/binary>>, _Req) ->
     Random = ktn_random:generate(),
+    RandomBinary = erlang:list_to_binary(Random),
     dets:insert(urls,
-                {erlang:list_to_binary(Random), Url}),
-    {ok, [], Random};
+                {RandomBinary, Url}),
+
+    RandomUrl = <<"http://localhost:3000/", RandomBinary/binary>>,
+    {ok, [{<<"Location">>, RandomUrl}], RandomUrl};
 
 handle('GET', <<"/", RandomUrl/binary>>, _Req) ->
     case dets:lookup(urls, RandomUrl) of
