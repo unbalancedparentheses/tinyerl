@@ -1,0 +1,14 @@
+{application, erly,
+ [
+  {description, "Erly"},
+  {vsn, "0.1"},
+  {applications,
+   [
+    kernel,
+    stdlib,
+    cowboy
+   ]},
+  {modules, [erly]},
+  {mod, {erly, []}}
+ ]
+}.
