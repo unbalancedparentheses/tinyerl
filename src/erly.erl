@@ -1,39 +1,20 @@
 -module(erly).
 
 -export([
+         start/0,
          start/2,
          stop/1
         ]).
 
+start() ->
+    application:ensure_all_started(erly).
+
 %% @private
 start(_StartType, _StartArgs) ->
-    start_listeners().
+    dets:open_file(urls, []),
+    erly_sup:start_link().
 
 %% @private
 stop(_State) ->
-    cowboy:stop_listener(gossip_http),
+    dets:close(urls),
     ok.
-
-start_listeners() ->
-    Dispatch =
-        cowboy_router:compile(
-          [{'_',
-            [
-             {<<"/">>, erly_handler, []}
-            ]
-           }
-          ]),
-
-    RanchOptions =
-        [{port, 8080}],
-    CowboyOptions =
-        [
-         {env,
-          [
-           {dispatch, Dispatch}
-          ]},
-         {compress, true},
-         {timeout, 12000}
-        ],
-
-    cowboy:start_http(gossip_http, 10, RanchOptions, CowboyOptions).
