@@ -26,7 +26,7 @@ handle('GET', <<"/", RandomUrl/binary>>, _Req) ->
     end;
 
 handle(_, _, _Req) ->
-    {404, [], <<"Not Found">>}.
+    {405, [], <<"Method Not Allowed">>}.
 
 handle_event(_Event, _Data, _Args) ->
     ok.
