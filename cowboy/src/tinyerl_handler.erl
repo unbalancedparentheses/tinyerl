@@ -1,0 +1,2 @@
+-module(tinyerl_handler).
+-export([handle/2, handle_event/3]).
