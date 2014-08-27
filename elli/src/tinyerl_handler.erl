@@ -14,7 +14,7 @@ handle('POST', <<"/", Url/binary>>, _Req) ->
     dets:insert(urls,
                 {RandomBinary, Url}),
 
-    RandomUrl = <<"http://localhost:3000/", RandomBinary/binary>>,
+    RandomUrl = <<"http://localhost:8080/", RandomBinary/binary>>,
     {201, [{<<"Location">>, RandomUrl}], RandomUrl};
 
 handle('GET', <<"/", RandomUrl/binary>>, _Req) ->
