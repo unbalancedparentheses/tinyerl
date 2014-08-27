@@ -1,4 +1,4 @@
-PROJECT = erly
+PROJECT = tinyerl
 
 DEPS = elli jiffy katana sync
 dep_elli = git git@github.com:knutin/elli.git
@@ -11,6 +11,6 @@ RUN := erl -pa ebin -pa deps/*/ebin -smp enable -s sync -boot start_sasl ${ERL_A
 NODE ?= ${PROJECT}
 
 shell: app
-	if [ -n "${NODE}" ]; then ${RUN} -name ${NODE}@`hostname` -s erly; \
-	else ${RUN} -s erly; \
+	if [ -n "${NODE}" ]; then ${RUN} -name ${NODE}@`hostname` -s tinyerl; \
+	else ${RUN} -s tinyerl; \
 	fi

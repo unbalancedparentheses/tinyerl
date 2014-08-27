@@ -1,4 +1,4 @@
--module(erly_handler).
+-module(tinyerl_handler).
 -export([handle/2, handle_event/3]).
 
 -include_lib("elli/include/elli.hrl").
