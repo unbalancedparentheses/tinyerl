@@ -1,6 +1,6 @@
 PROJECT = tinyerl
 
-DEPS = elli jiffy katana sync
+DEPS = cowboy jiffy katana sync
 dep_cowboy = git git@github.com:ninenines/cowboy.git
 dep_katana = git git@github.com:unbalancedparentheses/erlang-katana.git
 dep_sync = git https://github.com/rustyio/sync.git master
