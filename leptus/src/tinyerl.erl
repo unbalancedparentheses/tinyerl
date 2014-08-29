@@ -40,7 +40,6 @@ init(_Route, _Req, State) ->
     {ok, State}.
 
 get("/:url", Req, State) ->
-    io:format("GET~n"),
     <<"/", RandomUrl/binary>> = leptus_req:uri(Req),
     case dets:lookup(urls, RandomUrl) of
         [{_, Url}] ->
@@ -49,9 +48,8 @@ get("/:url", Req, State) ->
             {404, <<"Not Found">>, State}
     end.
 
-post("/:url", Req, State) ->
-    io:format("POST~n"),
-    <<"/", Url/binary>> = leptus_req:uri(Req),
+post("/", Req, State) ->
+    Url = leptus_req:qs_val(Req, <<"url">>),
     Random = ktn_random:generate(),
     RandomBinary = erlang:list_to_binary(Random),
     dets:insert(urls, {RandomBinary, Url}),
