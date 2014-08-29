@@ -1,7 +1,7 @@
 PROJECT = tinyerl
 
 DEPS = leptus jiffy katana sync
-dep_leptus = git https://github.com/s1n4/leptus master
+dep_leptus = git https://github.com/jfacorro/leptus jfacorro.replace.makefile
 dep_katana = git git@github.com:unbalancedparentheses/erlang-katana.git
 dep_sync = git https://github.com/rustyio/sync.git master
 
