@@ -1,0 +1,14 @@
+{application, tinyerl,
+ [
+  {description, "Tinyerl"},
+  {vsn, "0.1"},
+  {applications,
+   [
+    kernel,
+    stdlib,
+    axiom
+   ]},
+  {modules, [tinyerl]},
+  {mod, {tinyerl, []}}
+ ]
+}.
