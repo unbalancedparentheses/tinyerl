@@ -49,13 +49,18 @@ get("/:url", Req, State) ->
     end.
 
 post("/", Req, State) ->
-    Url = leptus_req:qs_val(Req, <<"url">>),
-    Random = ktn_random:generate(),
-    RandomBinary = erlang:list_to_binary(Random),
-    dets:insert(urls, {RandomBinary, Url}),
+    BodyQs = leptus_req:body_qs(Req),
+    case proplists:get_value(<<"url">>, BodyQs) of
+        undefined ->
+            {400, <<"Missing 'url' parameter.">>, State};
+        Url ->
+            Random = ktn_random:generate(),
+            RandomBinary = erlang:list_to_binary(Random),
+            dets:insert(urls, {RandomBinary, Url}),
 
-    RandomUrl = <<"http://localhost:8080/", RandomBinary/binary>>,
-    {201, [{<<"Location">>, RandomUrl}], <<"">>, State}.
+            RandomUrl = <<"http://localhost:8080/", RandomBinary/binary>>,
+            {201, [{<<"Location">>, RandomUrl}], <<"">>, State}
+    end.
 
 terminate(_Reason, _Route, _Req, _State) ->
     ok.
