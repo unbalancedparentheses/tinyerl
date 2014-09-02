@@ -39,8 +39,8 @@ stop(_State) ->
 init(_Route, _Req, State) ->
     {ok, State}.
 
-get("/:url", Req, State) ->
-    <<"/", RandomUrl/binary>> = leptus_req:uri(Req),
+get("/:short_url", Req, State) ->
+    RandomUrl = leptus_req:param(Req, short_url),
     case dets:lookup(urls, RandomUrl) of
         [{_, Url}] ->
             {302, [{<<"Location">>, Url}], <<"">>, State};
@@ -48,7 +48,7 @@ get("/:url", Req, State) ->
             {404, <<"Not Found">>, State}
     end.
 
-post("/", Req, State) ->
+post("/shorten", Req, State) ->
     BodyQs = leptus_req:body_qs(Req),
     case proplists:get_value(<<"url">>, BodyQs) of
         undefined ->
