@@ -21,14 +21,15 @@ start_cowboy_listeners() ->
         cowboy_router:compile(
           [{'_',
             [
-             {<<"/">>, tinyerl_handler, []}
+             {<<"/:short-url">>, tinyerl_handler, []},
+             {<<"/shorten">>, tinyerl_handler, []}
             ]
            }
           ]),
 
     RanchOptions =
         [
-         {port, 8080}
+         {port, 3000}
         ],
     CowboyOptions =
         [
