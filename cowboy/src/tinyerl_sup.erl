@@ -1,6 +1,10 @@
 -module(tinyerl_sup).
 -behaviour(supervisor).
--export([start_link/0, init/1]).
+
+-export([
+         start_link/0,
+         init/1
+        ]).
 
 -define(CHILD(I, Type, Args), {I, {I, start_link, Args}, permanent, 5000, Type, [I]}).
 

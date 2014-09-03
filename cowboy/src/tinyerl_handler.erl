@@ -1,12 +1,14 @@
 -module(tinyerl_handler).
--export([init/3, handle/2, terminate/3]).
 
--spec init({atom(), atom()}, cowboy_req:req(), term()) ->
-    {ok, Req, State} | {shutdown, Req, State}.
+-export([
+         init/3,
+         handle/2,
+         terminate/3]
+       ).
+
 init(_Type, Req, _Opts) ->
     {ok, Req, #{}}.
 
--spec handle(cowboy_req:req(), #{}) -> ok.
 handle(Req, State) ->
     try
         case cowboy_req:method(Req) of
@@ -22,7 +24,6 @@ handle(Req, State) ->
             handle_exception(Reason, Req, State)
     end.
 
--spec terminate(term(), cowboy_req:req(), #{}) -> ok.
 terminate(_Reason, _Req, _State) ->
     ok.
 
