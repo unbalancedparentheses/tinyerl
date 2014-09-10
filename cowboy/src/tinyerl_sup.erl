@@ -6,43 +6,18 @@
          init/1
         ]).
 
--define(CHILD(I, Type, Args), {I, {I, start_link, Args}, permanent, 5000, Type, [I]}).
-
 start_link() ->
-    start_cowboy_listeners(),
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init([]) ->
     {ok, {
        {one_for_one, 5, 10},
        [
-        ?CHILD(ktn_random, worker, [])
+        {ktn_random,
+         {ktn_random, start_link, []},
+         permanent,
+         5000,
+         worker,
+         [ktn_random]}
        ]}
     }.
-
-start_cowboy_listeners() ->
-    Dispatch =
-        cowboy_router:compile(
-          [{'_',
-            [
-             {<<"/:short-url">>, tinyerl_handler, []},
-             {<<"/shorten">>, tinyerl_handler, []}
-            ]
-           }
-          ]),
-
-    RanchOptions =
-        [
-         {port, 3000}
-        ],
-    CowboyOptions =
-        [
-         {env,
-          [
-           {dispatch, Dispatch}
-          ]},
-         {compress, true},
-         {timeout, 12000}
-        ],
-
-    cowboy:start_http(tinyerl_http, 10, RanchOptions, CowboyOptions).

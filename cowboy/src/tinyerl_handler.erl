@@ -43,7 +43,7 @@ handle_post(Req, State) ->
     RandomBinary = erlang:list_to_binary(Random),
     dets:insert(urls, {RandomBinary, Url}),
 
-    ShortUrl = <<"http://localhost:3000/", RandomBinary/binary>>,
+    ShortUrl = <<"http://localhost:8080/", RandomBinary/binary>>,
     Headers = [{<<"Location">>, ShortUrl}],
     {ok, Req3} = cowboy_req:reply(201, Headers, Req2),
     {ok, Req3, State}.
